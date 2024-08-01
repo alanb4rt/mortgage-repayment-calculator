@@ -5,7 +5,9 @@ export default function App() {
         <div className="grid grid-cols-2">
           <div>
             <form>
-              <h1>Mortgage Calculator</h1>
+              <h1 className="text-2xl font-bold text-mySlate-900">
+                Mortgage Calculator
+              </h1>
               <button>Clear All</button>
               <div>
                 <label htmlFor="amount">Mortgage Amount</label>
@@ -45,7 +47,7 @@ export default function App() {
           </div>
           {/* <!-- Empty results start --> */}
           <div>
-            <h2>Results shown</h2>
+            <h2 className="text-2xl font-bold">Results shown</h2>
             <p>
               here Complete the form and click “calculate repayments” to see
               what your monthly repayments would be.
@@ -54,7 +56,7 @@ export default function App() {
           {/* <!-- Empty results end --> */}
           {/* <!-- Completed results start --> */}
           <div>
-            <h2>Your results</h2>
+            <h2 className="text-2xl font-bold">Your results</h2>
             <p>
               Your results are shown below based on the information you
               provided. To adjust the results, edit the form and click
