@@ -1,14 +1,24 @@
+import { useState } from "react";
+import EmptyResult from "./components/EmptyResult";
+import Result from "./components/Result";
+
 export default function App() {
+  const [showResult, setShowResult] = useState(false);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+  };
+
   return (
     <>
       <main className="container mx-auto">
         <div className="grid grid-cols-2">
           <div>
-            <form>
+            <form onSubmit={handleSubmit}>
               <h1 className="text-2xl font-bold text-mySlate-900">
                 Mortgage Calculator
               </h1>
-              <button>Clear All</button>
+              <button type="reset">Clear All</button>
               <div>
                 <label htmlFor="amount">Mortgage Amount</label>
                 <input type="number" name="amount" id="amount" />
@@ -42,35 +52,12 @@ export default function App() {
                   <label htmlFor="interest">Interest Only</label>
                 </div>
               </div>
-              <button>Calculate Repayments</button>
+              <button onClick={() => setShowResult(!showResult)}>
+                Calculate Repayments
+              </button>
             </form>
           </div>
-          {/* <!-- Empty results start --> */}
-          <div>
-            <h2 className="text-2xl font-bold">Results shown</h2>
-            <p>
-              here Complete the form and click “calculate repayments” to see
-              what your monthly repayments would be.
-            </p>
-          </div>
-          {/* <!-- Empty results end --> */}
-          {/* <!-- Completed results start --> */}
-          <div>
-            <h2 className="text-2xl font-bold">Your results</h2>
-            <p>
-              Your results are shown below based on the information you
-              provided. To adjust the results, edit the form and click
-              “calculate repayments” again.
-            </p>
-            <div>
-              <p>Your monthly repayments</p>
-              X,XXX,XXX
-            </div>
-            <div>
-              <p>Total you'll repay over the term</p>
-              X,XXX,XXX
-            </div>
-          </div>
+          <div>{!showResult ? <EmptyResult /> : <Result />}</div>
         </div>
       </main>
     </>
