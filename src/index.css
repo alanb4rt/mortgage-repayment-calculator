@@ -19,7 +19,79 @@
 }
 
 body {
+  @apply bg-mySlate-100;
   margin: 0;
   padding: 0;
   min-height: 100vh;
+}
+
+form {
+  @apply flex flex-col gap-4;
+}
+
+.ctn-input,
+fieldset {
+  @apply flex flex-col gap-2;
+}
+
+.btn-reset,
+label,
+legend {
+  @apply text-sm text-mySlate-700;
+}
+
+.ctn-input-content {
+  @apply overflow-hidden w-full flex border border-mySlate-500 rounded font-bold;
+}
+
+.input-content-info {
+  @apply grid place-content-center bg-mySlate-100 text-mySlate-700 p-4 leading-none;
+}
+
+input {
+  @apply appearance-none w-full outline-none p-3 font-bold leading-none;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button,
+input[type=number] {
+  -webkit-appearance: none;
+  -moz-appearance: textfield;
+}
+
+.ctn-input-content:has(input:focus) {
+  @apply border-primary;
+
+  .input-content-info {
+    @apply bg-primary text-black;
+  }
+}
+
+.ctn-input-radio {
+  @apply cursor-pointer flex items-center gap-2 font-bold border border-mySlate-500 px-4 py-3 rounded text-black;
+}
+
+.ctn-input-radio:has(input:checked) {
+  @apply bg-primary bg-opacity-20 border border-primary;
+}
+
+.ctn-input-radio input {
+  @apply relative aspect-square w-fit border border-mySlate-500 rounded-full p-2;
+}
+
+.ctn-input-radio input:checked {
+  @apply bg-white border border-primary;
+}
+
+.ctn-input-radio input::before,
+.ctn-input-radio input:checked:before {
+  @apply content-[""] absolute inset-0 w-[80%] m-auto aspect-square rounded-full;
+}
+
+.ctn-input-radio input:checked:before {
+  @apply bg-primary;
+}
+
+.btn-submit {
+  @apply w-fit flex items-center gap-2 bg-primary px-8 py-3 rounded-full font-bold mt-4;
 }
