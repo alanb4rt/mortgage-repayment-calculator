@@ -1,13 +1,78 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import EmptyResult from "./components/EmptyResult";
 import Result from "./components/Result";
 import IconCalculator from "./assets/images/icon-calculator.svg";
 
 export default function App() {
-  const [showResult, setShowResult] = useState(false);
+  const initialValues = {
+    amount: "",
+    term: "",
+    rate: "",
+    type: "",
+  };
+  const [myInputs, setMyInputs] = useState({ ...initialValues });
+
+  const handleInputChange = (event) => {
+    const { name, value } = event.target;
+    setMyInputs((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
+
+  const handleReset = () => {
+    setMortgage();
+    setMyInputs({ ...initialValues });
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
+
+    calculateMortgage(
+      myInputs.amount,
+      myInputs.term,
+      myInputs.rate,
+      myInputs.type
+    );
+  };
+
+  const [mortgage, setMortgage] = useState();
+
+  const calculateMortgage = (amount, term, interest, type) => {
+    const monthlyInterestRate = interest / 1200;
+    const numberOfPayments = term * 12;
+
+    let monthlyPayment, totalRepayment;
+
+    switch (type) {
+      case "repayment":
+        monthlyPayment =
+          (amount * monthlyInterestRate) /
+          (1 - Math.pow(1 + monthlyInterestRate, -numberOfPayments));
+        totalRepayment = monthlyPayment * numberOfPayments;
+        break;
+      case "interest-only":
+        monthlyPayment = amount * monthlyInterestRate;
+        totalRepayment = monthlyPayment * numberOfPayments;
+        break;
+      default:
+        console.error("Invalid mortgage type");
+        return;
+    }
+
+    const currencyFormatter = new Intl.NumberFormat("en-GB", {
+      style: "currency",
+      currency: "GBP",
+      minimumFractionDigits: 2,
+    });
+
+    const formattedMonthlyTotal = currencyFormatter.format(monthlyPayment);
+    const formattedTotal = currencyFormatter.format(totalRepayment);
+
+    setMortgage({
+      monthlyPayment: formattedMonthlyTotal,
+      totalRepayment: formattedTotal,
+    });
   };
 
   return (
@@ -21,7 +86,11 @@ export default function App() {
                   <h1 className="text-2xl font-bold text-mySlate-900">
                     Mortgage Calculator
                   </h1>
-                  <button className="btn-reset underline" type="reset">
+                  <button
+                    className="btn-reset underline"
+                    type="reset"
+                    onClick={handleReset}
+                  >
                     Clear All
                   </button>
                 </div>
@@ -29,21 +98,39 @@ export default function App() {
                   <label htmlFor="amount">Mortgage Amount</label>
                   <div className="ctn-input-content">
                     <div className="input-content-info">£</div>
-                    <input type="number" name="amount" id="amount" />
+                    <input
+                      type="number"
+                      name="amount"
+                      id="amount"
+                      value={myInputs.amount}
+                      onChange={handleInputChange}
+                    />
                   </div>
                 </div>
                 <div className="grid grid-cols-2 gap-4">
                   <div className="ctn-input">
                     <label htmlFor="term">Mortgage Term</label>
                     <div className="ctn-input-content">
-                      <input type="number" name="term" id="term" />
+                      <input
+                        type="number"
+                        name="term"
+                        id="term"
+                        value={myInputs.term}
+                        onChange={handleInputChange}
+                      />
                       <div className="input-content-info">years</div>
                     </div>
                   </div>
                   <div className="ctn-input">
                     <label htmlFor="rate">Interest Rate</label>
                     <div className="ctn-input-content">
-                      <input type="number" name="rate" id="rate" />
+                      <input
+                        type="number"
+                        name="rate"
+                        id="rate"
+                        value={myInputs.rate}
+                        onChange={handleInputChange}
+                      />
                       <div className="input-content-info">%</div>
                     </div>
                   </div>
@@ -57,31 +144,30 @@ export default function App() {
                         id="repayment"
                         name="type"
                         value="repayment"
+                        onChange={handleInputChange}
                       />
                       Repayment
                     </label>
-                    <label className="ctn-input-radio" htmlFor="interest">
+                    <label className="ctn-input-radio" htmlFor="interest-only">
                       <input
                         type="radio"
-                        id="interest"
+                        id="interest-only"
                         name="type"
-                        value="interest"
+                        value="interest-only"
+                        onChange={handleInputChange}
                       />
                       Interest Only
                     </label>
                   </fieldset>
                 </div>
-                <button
-                  className="btn-submit"
-                  onClick={() => setShowResult(!showResult)}
-                >
+                <button className="btn-submit">
                   <img src={IconCalculator} alt="" />
                   Calculate Repayments
                 </button>
               </form>
             </div>
             <div className="bg-mySlate-900 text-white p-8 rounded-bl-[4rem]">
-              {!showResult ? <EmptyResult /> : <Result />}
+              {!mortgage ? <EmptyResult /> : <Result price={mortgage} />}
             </div>
           </div>
         </div>
