@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import FormInput from "./components/FormInput";
+import ErrorInput from "./components/ErrorInput";
 import EmptyResult from "./components/EmptyResult";
 import Result from "./components/Result";
 import IconCalculator from "./assets/images/icon-calculator.svg";
@@ -26,8 +27,28 @@ export default function App() {
     setMyInputs({ ...initialValues });
   };
 
+  const [inputErrors, setInputErrors] = useState({});
+  const [showResult, setShowResult] = useState(false);
+
   const handleSubmit = (e) => {
     e.preventDefault();
+
+    const checkEmptyInput = Object.fromEntries(
+      Object.entries(myInputs).filter(([key, value]) => value <= 0)
+    );
+
+    const inputKeyErrors = Object.keys(checkEmptyInput);
+
+    console.log(checkEmptyInput);
+
+    if (inputKeyErrors.length != 0) {
+      setShowResult(false);
+      setInputErrors(checkEmptyInput);
+      return;
+    }
+
+    setInputErrors({});
+    setShowResult(true);
 
     calculateMortgage(
       myInputs.amount,
@@ -82,7 +103,7 @@ export default function App() {
         <div className="grid place-content-center h-screen">
           <div className="grid grid-cols-2 bg-white rounded-2xl overflow-hidden">
             <div className="p-8">
-              <form onSubmit={handleSubmit}>
+              <form className="group" onSubmit={handleSubmit} noValidate>
                 <div className="flex justify-between mb-4">
                   <h1 className="text-2xl font-bold text-mySlate-900">
                     Mortgage Calculator
@@ -95,7 +116,11 @@ export default function App() {
                     Clear All
                   </button>
                 </div>
-                <div className="ctn-input">
+                <div
+                  className={`ctn-input ${
+                    inputErrors.amount != undefined ? "error-input" : ""
+                  }`}
+                >
                   <label htmlFor="amount">Mortgage Amount</label>
                   <div className="ctn-input-content">
                     <div className="input-content-info">£</div>
@@ -106,9 +131,14 @@ export default function App() {
                       handleInputChange={handleInputChange}
                     />
                   </div>
+                  {inputErrors.amount != undefined && <ErrorInput />}
                 </div>
                 <div className="grid grid-cols-2 gap-4">
-                  <div className="ctn-input">
+                  <div
+                    className={`ctn-input ${
+                      inputErrors.term != undefined ? "error-input" : ""
+                    }`}
+                  >
                     <label htmlFor="term">Mortgage Term</label>
                     <div className="ctn-input-content">
                       <FormInput
@@ -119,8 +149,13 @@ export default function App() {
                       />
                       <div className="input-content-info">years</div>
                     </div>
+                    {inputErrors.term != undefined && <ErrorInput />}
                   </div>
-                  <div className="ctn-input">
+                  <div
+                    className={`ctn-input ${
+                      inputErrors.rate != undefined ? "error-input" : ""
+                    }`}
+                  >
                     <label htmlFor="rate">Interest Rate</label>
                     <div className="ctn-input-content">
                       <FormInput
@@ -131,6 +166,7 @@ export default function App() {
                       />
                       <div className="input-content-info">%</div>
                     </div>
+                    {inputErrors.rate != undefined && <ErrorInput />}
                   </div>
                 </div>
                 <div className="ctn-input">
@@ -156,6 +192,7 @@ export default function App() {
                       />
                       Interest Only
                     </label>
+                    {inputErrors.type != undefined && <ErrorInput />}
                   </fieldset>
                 </div>
                 <button className="btn-submit">
@@ -165,7 +202,7 @@ export default function App() {
               </form>
             </div>
             <div className="bg-mySlate-900 text-white p-8 rounded-bl-[4rem]">
-              {!mortgage ? <EmptyResult /> : <Result price={mortgage} />}
+              {!showResult ? <EmptyResult /> : <Result price={mortgage} />}
             </div>
           </div>
         </div>
