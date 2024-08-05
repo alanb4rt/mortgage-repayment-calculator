@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import FormInput from "./components/FormInput";
 import EmptyResult from "./components/EmptyResult";
 import Result from "./components/Result";
 import IconCalculator from "./assets/images/icon-calculator.svg";
@@ -98,12 +99,11 @@ export default function App() {
                   <label htmlFor="amount">Mortgage Amount</label>
                   <div className="ctn-input-content">
                     <div className="input-content-info">£</div>
-                    <input
+                    <FormInput
                       type="number"
                       name="amount"
-                      id="amount"
                       value={myInputs.amount}
-                      onChange={handleInputChange}
+                      handleInputChange={handleInputChange}
                     />
                   </div>
                 </div>
@@ -111,12 +111,11 @@ export default function App() {
                   <div className="ctn-input">
                     <label htmlFor="term">Mortgage Term</label>
                     <div className="ctn-input-content">
-                      <input
+                      <FormInput
                         type="number"
                         name="term"
-                        id="term"
                         value={myInputs.term}
-                        onChange={handleInputChange}
+                        handleInputChange={handleInputChange}
                       />
                       <div className="input-content-info">years</div>
                     </div>
@@ -124,12 +123,11 @@ export default function App() {
                   <div className="ctn-input">
                     <label htmlFor="rate">Interest Rate</label>
                     <div className="ctn-input-content">
-                      <input
+                      <FormInput
                         type="number"
                         name="rate"
-                        id="rate"
                         value={myInputs.rate}
-                        onChange={handleInputChange}
+                        handleInputChange={handleInputChange}
                       />
                       <div className="input-content-info">%</div>
                     </div>
@@ -139,22 +137,22 @@ export default function App() {
                   <fieldset>
                     <legend className="mb-2">Mortgage Type</legend>
                     <label className="ctn-input-radio" htmlFor="repayment">
-                      <input
-                        type="radio"
+                      <FormInput
                         id="repayment"
+                        type="radio"
                         name="type"
                         value="repayment"
-                        onChange={handleInputChange}
+                        handleInputChange={handleInputChange}
                       />
                       Repayment
                     </label>
                     <label className="ctn-input-radio" htmlFor="interest-only">
-                      <input
-                        type="radio"
+                      <FormInput
                         id="interest-only"
+                        type="radio"
                         name="type"
                         value="interest-only"
-                        onChange={handleInputChange}
+                        handleInputChange={handleInputChange}
                       />
                       Interest Only
                     </label>
