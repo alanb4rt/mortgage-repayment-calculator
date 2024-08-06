@@ -99,7 +99,7 @@ export default function App() {
 
   return (
     <>
-      <main className="container mx-auto">
+      <main className="max-w-5xl mx-auto">
         <div className="grid place-content-center min-h-screen">
           <div className="grid grid-cols-1 bg-white rounded-none overflow-hidden sm:grid-cols-2 sm:rounded-2xl">
             <div className="p-8">
