@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import FormInput from "./components/FormInput";
 import ErrorInput from "./components/ErrorInput";
 import EmptyResult from "./components/EmptyResult";
@@ -23,6 +23,7 @@ export default function App() {
   };
 
   const handleReset = () => {
+    setShowResult(false);
     setMortgage();
     setMyInputs({ ...initialValues });
     setInputErrors({});
@@ -39,8 +40,6 @@ export default function App() {
     );
 
     const inputKeyErrors = Object.keys(checkEmptyInput);
-
-    console.log(checkEmptyInput);
 
     if (inputKeyErrors.length != 0) {
       setShowResult(false);
