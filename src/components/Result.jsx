@@ -13,14 +13,14 @@ export default function Result({ price }) {
         <div className="flex flex-col gap-8 p-8 mt-4 bg-black/25 rounded-lg border-t-4 border-primary">
           <div className="flex flex-col gap-2">
             <p className="text-mySlate-500">Your monthly repayments</p>
-            <span className="text-6xl font-bold text-primary">
+            <span className="text-4xl font-bold text-primary truncate sm:text-5xl">
               {monthlyPayment}
             </span>
           </div>
           <hr className="opacity-20" />
           <div className="flex flex-col gap-2">
             <p className="text-mySlate-500">Total you'll repay over the term</p>
-            <span className="text-lg">{totalRepayment}</span>
+            <span className="text-2xl truncate">{totalRepayment}</span>
           </div>
         </div>
       </div>

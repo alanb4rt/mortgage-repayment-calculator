@@ -97,7 +97,7 @@ input[type=number] {
 }
 
 .btn-submit {
-  @apply w-fit flex items-center gap-2 bg-primary px-8 py-3 rounded-full font-bold mt-4;
+  @apply w-full flex justify-center items-center gap-2 bg-primary px-8 py-3 rounded-full font-bold sm:w-fit sm:mt-4;
 }
 
 .error-input {

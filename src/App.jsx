@@ -101,11 +101,11 @@ export default function App() {
   return (
     <>
       <main className="container mx-auto">
-        <div className="grid place-content-center h-screen">
-          <div className="grid grid-cols-2 bg-white rounded-2xl overflow-hidden">
+        <div className="grid place-content-center min-h-screen">
+          <div className="grid grid-cols-1 bg-white rounded-none overflow-hidden sm:grid-cols-2 sm:rounded-2xl">
             <div className="p-8">
               <form className="group" onSubmit={handleSubmit} noValidate>
-                <div className="flex justify-between mb-4">
+                <div className="flex justify-between gap-y-2 gap-x-8 flex-wrap md:mb-4">
                   <h1 className="text-2xl font-bold text-mySlate-900">
                     Mortgage Calculator
                   </h1>
@@ -126,7 +126,7 @@ export default function App() {
                   prefix={<div className="input-content-info">£</div>}
                   error={inputErrors.amount}
                 />
-                <div className="grid grid-cols-2 gap-4">
+                <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
                   <FormInput
                     label="Mortgage Term"
                     type="number"
@@ -184,7 +184,7 @@ export default function App() {
                 </button>
               </form>
             </div>
-            <div className="bg-mySlate-900 text-white p-8 rounded-bl-[4rem]">
+            <div className="bg-mySlate-900 text-white p-8 rounded-none sm:rounded-bl-[4rem]">
               {!showResult ? <EmptyResult /> : <Result price={mortgage} />}
             </div>
           </div>
