@@ -25,6 +25,7 @@ export default function App() {
   const handleReset = () => {
     setMortgage();
     setMyInputs({ ...initialValues });
+    setInputErrors({});
   };
 
   const [inputErrors, setInputErrors] = useState({});
@@ -116,57 +117,39 @@ export default function App() {
                     Clear All
                   </button>
                 </div>
-                <div
-                  className={`ctn-input ${
-                    inputErrors.amount != undefined ? "error-input" : ""
-                  }`}
-                >
-                  <label htmlFor="amount">Mortgage Amount</label>
-                  <div className="ctn-input-content">
-                    <div className="input-content-info">£</div>
-                    <FormInput
-                      type="number"
-                      name="amount"
-                      value={myInputs.amount}
-                      handleInputChange={handleInputChange}
-                    />
-                  </div>
-                  {inputErrors.amount != undefined && <ErrorInput />}
-                </div>
+                <FormInput
+                  label="Mortgage Amount"
+                  type="number"
+                  name="amount"
+                  value={myInputs.amount}
+                  handleInputChange={handleInputChange}
+                  prefix={<div className="input-content-info">£</div>}
+                  error={inputErrors.amount}
+                />
                 <div className="grid grid-cols-2 gap-4">
-                  <div
-                    className={`ctn-input ${
-                      inputErrors.term != undefined ? "error-input" : ""
-                    }`}
-                  >
-                    <label htmlFor="term">Mortgage Term</label>
-                    <div className="ctn-input-content">
-                      <FormInput
-                        type="number"
-                        name="term"
-                        value={myInputs.term}
-                        handleInputChange={handleInputChange}
-                      />
-                      <div className="input-content-info">years</div>
-                    </div>
-                    {inputErrors.term != undefined && <ErrorInput />}
-                  </div>
+                  <FormInput
+                    label="Mortgage Term"
+                    type="number"
+                    name="term"
+                    value={myInputs.term}
+                    handleInputChange={handleInputChange}
+                    suffix={<div className="input-content-info">years</div>}
+                    error={inputErrors.term}
+                  />
                   <div
                     className={`ctn-input ${
                       inputErrors.rate != undefined ? "error-input" : ""
                     }`}
                   >
-                    <label htmlFor="rate">Interest Rate</label>
-                    <div className="ctn-input-content">
-                      <FormInput
-                        type="number"
-                        name="rate"
-                        value={myInputs.rate}
-                        handleInputChange={handleInputChange}
-                      />
-                      <div className="input-content-info">%</div>
-                    </div>
-                    {inputErrors.rate != undefined && <ErrorInput />}
+                    <FormInput
+                      label="Interest Rate"
+                      type="number"
+                      name="rate"
+                      value={myInputs.rate}
+                      handleInputChange={handleInputChange}
+                      suffix={<div className="input-content-info">%</div>}
+                      error={inputErrors.rate}
+                    />
                   </div>
                 </div>
                 <div className="ctn-input">

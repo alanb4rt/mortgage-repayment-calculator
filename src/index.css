@@ -71,6 +71,10 @@ input[type=number] {
   @apply cursor-pointer flex items-center gap-2 font-bold border border-mySlate-500 px-4 py-3 rounded text-black;
 }
 
+.ctn-input-radio .ctn-input-content {
+  @apply border-none w-fit;
+}
+
 .ctn-input-radio:has(input:checked) {
   @apply bg-primary bg-opacity-20 border border-primary;
 }
